@@ -1,0 +1,40 @@
+layout {
+    default_tab_template {
+        children
+        pane size=2 borderless=true {
+            plugin location="file:/Users/eduardoleal/.config/zellij/plugins/zjstatus.wasm" {
+                format_left   "{mode} #[fg=#89B4FA,bold]{session} {tabs}"
+                format_center ""
+                format_right  "#[fg=#6C7086,bold] {datetime} "
+                format_space  ""
+
+                border_enabled  "false"
+
+                hide_frame_for_single_pane "false"
+
+                mode_normal        "#[bg=#89B4FA,fg=#1E1E2E,bold] NORMAL "
+                mode_locked        "#[bg=#F38BA8,fg=#1E1E2E,bold] LOCKED "
+                mode_pane          "#[bg=#A6E3A1,fg=#1E1E2E,bold] PANE "
+                mode_tab           "#[bg=#F9E2AF,fg=#1E1E2E,bold] TAB "
+                mode_resize        "#[bg=#FAB387,fg=#1E1E2E,bold] RESIZE "
+                mode_move          "#[bg=#CBA6F7,fg=#1E1E2E,bold] MOVE "
+                mode_scroll        "#[bg=#94E2D5,fg=#1E1E2E,bold] SCROLL "
+                mode_search        "#[bg=#F2CDCD,fg=#1E1E2E,bold] SEARCH "
+                mode_session       "#[bg=#CDD6F4,fg=#1E1E2E,bold] SESSION "
+                mode_tmux          "#[bg=#F5C2E7,fg=#1E1E2E,bold] TMUX "
+                mode_entersearch   "#[bg=#F2CDCD,fg=#1E1E2E,bold] ENTER SEARCH "
+
+                tab_normal         "#[fg=#6C7086] {index}: {name} "
+                tab_active         "#[fg=#CDD6F4,bold,italic] {index}: {name} "
+                tab_normal_fullscreen "#[fg=#6C7086] {index}: {name} [] "
+                tab_active_fullscreen "#[fg=#CDD6F4,bold,italic] {index}: {name} [] "
+                tab_normal_sync    "#[fg=#6C7086] {index}: {name} <> "
+                tab_active_sync    "#[fg=#CDD6F4,bold,italic] {index}: {name} <> "
+
+                datetime           "#[fg=#6C7086]{format}"
+                datetime_format    "%d/%m %H:%M"
+                datetime_timezone  "Europe/Lisbon"
+            }
+        }
+    }
+}

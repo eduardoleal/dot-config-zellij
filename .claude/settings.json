@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /Users/eduardoleal/.config/zellij/.claude/update-plugin-docs.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

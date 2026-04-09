@@ -1,0 +1,11 @@
+# Local Claude Code permissions (personal overrides, not shared)
+.claude/settings.local.json
+
+# Backup files
+*.bak
+
+# nw tooling scratch state
+.nwave/
+
+# macOS cruft
+.DS_Store
