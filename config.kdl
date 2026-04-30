@@ -278,6 +278,12 @@ keybinds clear-defaults=true {
 // Plugin aliases - can be used to change the implementation of Zellij
 // changing these requires a restart to take effect
 plugins {
+    zjstatus-hints location="file:/Users/eduardoleal/.config/zellij/plugins/zjstatus-hints.wasm" {
+        max_length 0
+        overflow_str "..."
+        pipe_name "zjstatus_hints"
+        hide_in_base_mode false
+    }
     autolock location="file:/Users/eduardoleal/.config/zellij/plugins/zellij-autolock.wasm" {
         is_enabled true
         triggers "nvim|vim|hx|git|fzf|zoxide|atuin"
@@ -305,6 +311,7 @@ plugins {
 // eg. "https://example.com/my-plugin.wasm"
 load_plugins {
     autolock
+    zjstatus-hints
 }
  
 // Use a simplified UI without special fonts (arrow glyphs)
