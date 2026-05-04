@@ -285,7 +285,7 @@ plugins {
         hide_in_base_mode false
     }
     autolock location="file:/Users/eduardoleal/.config/zellij/plugins/zellij-autolock.wasm" {
-        is_enabled true
+        is_enabled false
         triggers "nvim|vim|hx|git|fzf|zoxide|atuin"
         reaction_seconds "1.3"
         print_to_log false

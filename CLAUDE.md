@@ -52,7 +52,6 @@ is downloaded. To update descriptions or versions, edit the `KNOWN_PLUGINS` regi
 | zellij-autolock | `zellij-autolock.wasm` | Headless (load_plugins) | Auto-locks Zellij when vim/nvim/hx/fzf/git/zoxide/atuin is focused | [fresh2dev/zellij-autolock](https://github.com/fresh2dev/zellij-autolock) | 0.2.2 |
 | zellij-forgot | `zellij_forgot.wasm` | `Ctrl y` | Floating keybinding cheatsheet — auto-reads bindings from config.kdl | [karimould/zellij-forgot](https://github.com/karimould/zellij-forgot) | 0.4.2 |
 | zjstatus | `zjstatus.wasm` | Layout (status bar) | Customizable status bar — mode badges, session, tabs, datetime | [dj95/zjstatus](https://github.com/dj95/zjstatus) | 0.22.0 |
-| zjstatus-hints | `zjstatus-hints.wasm` | Headless (load_plugins) | Mode-aware keybinding hints injected into zjstatus via named pipe | [b0o/zjstatus-hints](https://github.com/b0o/zjstatus-hints) | 0.1.4+patch |
 <!-- PLUGINS:END -->
 
 ### Inactive (in plugins/ but not configured)
