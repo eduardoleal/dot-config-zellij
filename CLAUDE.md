@@ -11,6 +11,11 @@ Zellij terminal multiplexer config for macOS. Theme: **Catppuccin Mocha**. Shell
 │   └── default.kdl              zjstatus status bar, tab template
 ├── plugins/                     all .wasm plugin binaries live here
 │   └── *.wasm
+├── docs/solutions/              documented fixes to past problems, by
+│                                category, w/ YAML frontmatter (module,
+│                                tags, problem_type)
+├── CONCEPTS.md                  shared domain vocabulary (plugin &
+│                                permission terms)
 └── .claude/
     ├── settings.json            project-level hooks (committed)
     ├── settings.local.json      local permissions (gitignored)
@@ -51,6 +56,7 @@ is downloaded. To update descriptions or versions, edit the `KNOWN_PLUGINS` regi
 | room | `room.wasm` | `Ctrl u` | Fuzzy type-to-filter tab switcher with quick-jump by number | [rvcas/room](https://github.com/rvcas/room) | 1.2.1 |
 | zellij-autolock | `zellij-autolock.wasm` | Headless (load_plugins) | Auto-locks Zellij when vim/nvim/hx/fzf/git/zoxide/atuin is focused | [fresh2dev/zellij-autolock](https://github.com/fresh2dev/zellij-autolock) | 0.2.2 |
 | zellij-forgot | `zellij_forgot.wasm` | `Ctrl y` | Floating keybinding cheatsheet — auto-reads bindings from config.kdl | [karimould/zellij-forgot](https://github.com/karimould/zellij-forgot) | 0.4.2 |
+| zjstatus-hints | `zjstatus-hints.wasm` | Headless (load_plugins) | Pipes mode-aware keybinding hints into the zjstatus status bar | [b0o/zjstatus-hints](https://github.com/b0o/zjstatus-hints) | 0.1.4 |
 | zjstatus | `zjstatus.wasm` | Layout (status bar) | Customizable status bar — mode badges, session, tabs, datetime | [dj95/zjstatus](https://github.com/dj95/zjstatus) | 0.22.0 |
 <!-- PLUGINS:END -->
 

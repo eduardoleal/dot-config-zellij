@@ -40,6 +40,13 @@ KNOWN_PLUGINS: dict[str, dict] = {
         "version": "0.22.0",
         "trigger": "Layout (status bar)",
     },
+    "zjstatus-hints.wasm": {
+        "name":    "zjstatus-hints",
+        "purpose": "Pipes mode-aware keybinding hints into the zjstatus status bar",
+        "source":  "b0o/zjstatus-hints",
+        "version": "0.1.4",
+        "trigger": "Headless (load_plugins)",
+    },
     "zellij-autolock.wasm": {
         "name":    "zellij-autolock",
         "purpose": "Auto-locks Zellij when vim/nvim/hx/fzf/git/zoxide/atuin is focused",
