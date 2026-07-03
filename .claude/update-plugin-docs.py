@@ -3,7 +3,7 @@
 
 PostToolUse hook (Bash) — fires after every Bash tool call.
 If a .wasm file in plugins/ was modified in the last 90 seconds,
-regenerates the active-plugin table in CLAUDE.md between the
+regenerates the active-plugin table in AGENTS.md between the
 <!-- PLUGINS:START --> and <!-- PLUGINS:END --> markers.
 
 Registry: add an entry to KNOWN_PLUGINS whenever you install a new plugin.
@@ -21,7 +21,7 @@ from pathlib import Path
 PLUGINS_DIR = Path.home() / ".config/zellij/plugins"
 CONFIG_KDL  = Path.home() / ".config/zellij/config.kdl"   # symlink → ~/Documents/config.kdl
 LAYOUT_KDL  = Path.home() / ".config/zellij/layouts/default.kdl"
-CLAUDE_MD   = Path.home() / ".config/zellij/CLAUDE.md"
+AGENTS_MD   = Path.home() / ".config/zellij/AGENTS.md"
 
 RECENT_SECONDS = 90   # treat .wasm modified within this window as "just added"
 MARKER_START   = "<!-- PLUGINS:START -->"
@@ -157,8 +157,8 @@ def build_table(wasm_files: list[Path], config: str, layout: str) -> str:
     return header + sep + "".join(rows)
 
 
-def update_claude_md(table: str) -> None:
-    text = CLAUDE_MD.read_text()
+def update_agents_md(table: str) -> None:
+    text = AGENTS_MD.read_text()
     new_block = f"{MARKER_START}\n{table}{MARKER_END}"
     new_text = re.sub(
         rf"{re.escape(MARKER_START)}.*?{re.escape(MARKER_END)}",
@@ -167,8 +167,8 @@ def update_claude_md(table: str) -> None:
         flags=re.DOTALL,
     )
     if new_text != text:
-        CLAUDE_MD.write_text(new_text)
-        print("[update-plugin-docs] Plugin table updated in CLAUDE.md")
+        AGENTS_MD.write_text(new_text)
+        print("[update-plugin-docs] Plugin table updated in AGENTS.md")
     else:
         print("[update-plugin-docs] Plugin table unchanged")
 
@@ -193,7 +193,7 @@ def main() -> None:
     config = CONFIG_KDL.read_text()
     layout = LAYOUT_KDL.read_text()
     table  = build_table(wasm_files, config, layout)
-    update_claude_md(table)
+    update_agents_md(table)
 
 
 if __name__ == "__main__":

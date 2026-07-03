@@ -106,4 +106,4 @@ Zellij re-prompted for `zjstatus-hints.wasm` plugin permissions on every session
 
 ## Related Issues
 
-- The repo `CLAUDE.md` documents this trap generically under **Notes > Permissions**; this doc is the detailed, plugin-specific walkthrough.
+- The repo `AGENTS.md` documents this trap generically under **Notes > Permissions**; this doc is the detailed, plugin-specific walkthrough.
