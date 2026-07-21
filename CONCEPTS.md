@@ -12,3 +12,17 @@ A plugin whose output is rendered inside the status bar instead of in its own pa
 
 ### Plugin permission grant
 A standing authorization for one plugin to use a specific capability (reading application state, running commands, messaging other plugins, and so on). Grants are the only way a plugin's requested capabilities are approved — there is no global auto-allow — and they persist in an OS-level permission cache outside this repo, keyed per plugin. A running server holds grants in memory and re-reads the cache only when a new session starts, so a grant added mid-session takes effect only after a restart. A [[Headless plugin]] or [[Status-bar plugin]] must have its grants written ahead of time, since it has no pane to accept the prompt.
+
+## Tab Naming
+
+### Pane title
+The Zellij-exposed title for a pane. Codex/Claude-style CLIs can publish task context here, making it the primary MVP source for semantic tab names before any hook metadata or LLM compression is considered.
+
+### Deterministic tab label
+A generated tab name derived from local Zellij-visible context, usually project plus activity. It is the fallback label when no pushed task metadata is available or when the LLM label endpoint is unavailable.
+
+### Pushed tab metadata
+Task or session context sent into the tab namer by a tool integration such as a Claude hook, shell hook, or future agent hook. This is the only MVP input that may be sent to an LLM for label compression; visible pane text and scrollback stay outside the model boundary.
+
+### Manual tab-name override
+A user-provided tab name that automation must preserve. Once a tab is manually renamed, generated labels are ignored for that tab until the override is cleared or automation is explicitly re-enabled.
