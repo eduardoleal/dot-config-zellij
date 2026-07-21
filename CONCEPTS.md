@@ -26,3 +26,12 @@ Task or session context sent into the tab namer by a tool integration such as a 
 
 ### Manual tab-name override
 A user-provided tab name that automation must preserve. Once a tab is manually renamed, generated labels are ignored for that tab until the override is cleared or automation is explicitly re-enabled.
+
+### Dual-mode installer
+A `zellij-tab-namer` installer contract that supports the current CLI watcher setup and the native WASM plugin setup through one stable user-facing setup flow. CLI mode may be available before the WASM artifact exists, but WASM mode remains a first-class target rather than a later rewrite of the install experience.
+
+### Activation flag
+An explicit installer option that allows disruptive activation work, such as restarting or deleting Zellij sessions. Without an activation flag, installer setup may edit files and report that a fresh session is needed, but it must not kill active Zellij work.
+
+### Installer backup
+A restorable copy created before the installer changes Zellij config or permission-cache files. Backups are part of the installer safety contract, not an optional debug artifact.
