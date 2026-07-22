@@ -71,7 +71,7 @@ An installer that only downloads a file would leave the highest-risk steps to ma
 
 - R10. Before editing any Zellij config or permission-cache file, the installer must create a timestamped backup next to the original or in a clearly reported backup directory.
 - R11. For headless/plugin startup mode, the installer must manage required Zellij plugin permission grants when the requested permissions are known.
-- R12. On macOS, if `permissions.kdl` is immutable, the installer must thaw it before editing and restore the immutable flag afterward.
+- R12. On macOS, when the installer successfully pre-grants headless/plugin permissions in `permissions.kdl`, it must leave the cache protected against Zellij rewriting those grants away. If the file is immutable, the installer must thaw it before editing and restore the immutable flag afterward; if the file starts mutable, the installer must freeze it after a successful grant unless the user explicitly opts out.
 - R13. If permission-cache editing fails or the cache format is not safely understood, the installer must stop before partial permission mutation and tell the user what remains manual.
 - R14. The installer must not run `zellij delete-all-sessions --force`, kill Zellij servers, or restart sessions unless the user passes an explicit activation flag.
 
@@ -122,7 +122,7 @@ An installer that only downloads a file would leave the highest-risk steps to ma
 - AE1. **Covers R1, R18.** Given no WASM artifact exists yet, when the user runs combined setup, then CLI watcher setup completes and verification uses dry-run behavior rather than renaming tabs unexpectedly.
 - AE2. **Covers R2, R4.** Given the user requests WASM mode and no release `.wasm` is available, when the installer runs, then it reports the missing artifact and does not pretend plugin setup succeeded.
 - AE3. **Covers R7, R8.** Given `config.kdl` already contains unrelated plugins and keybindings, when the installer wires the tab namer, then existing entries remain intact and duplicate tab-namer entries are not added.
-- AE4. **Covers R10, R12.** Given `permissions.kdl` is immutable on macOS, when known plugin grants must be added, then the installer backs up the file, thaws it, edits it, and restores the immutable flag.
+- AE4. **Covers R10, R12.** Given `permissions.kdl` is managed on macOS, when known headless plugin grants are added, then the installer backs up the file, thaws it if needed, edits it, and leaves the cache frozen afterward unless the user explicitly opts out.
 - AE5. **Covers R13.** Given permission-cache parsing or writing fails, when the installer reaches permission setup, then it stops before unsafe partial mutation and reports the manual step still required.
 - AE6. **Covers R14, R20.** Given active Zellij sessions exist, when setup completes without an explicit restart flag, then the installer does not delete sessions and tells the user a fresh session is needed if applicable.
 - AE7. **Covers R19.** Given installer-created config changes and artifacts exist, when rollback runs, then the previous config can be restored from backups and installer-created artifacts can be removed without touching unrelated plugins.
@@ -224,7 +224,7 @@ The installer is a planner plus an operation applier. The planner can be exercis
 
 ### Risks & Dependencies
 
-- Zellij's permission cache is owner-managed and may be rewritten by a running server; installer output must explain that grants apply on fresh sessions and that local immutable-cache behavior may be required on macOS.
+- Zellij's permission cache is owner-managed and may be rewritten by a running server; installer output must explain that grants apply on fresh sessions and that durable headless grants require freezing `permissions.kdl` on macOS unless the user explicitly opts out.
 - KDL text mutation can be wrong if the config shape diverges from expected blocks; the implementation must stop on ambiguity instead of attempting broad rewrites.
 - WASM artifact availability is outside this repository until the native plugin exists; the first installer must clearly separate "CLI installed" from "WASM unavailable."
 
@@ -250,7 +250,7 @@ The installer is a planner plus an operation applier. The planner can be exercis
 - **Requirements:** R2, R4, R6, R7, R8, R10, R11, R12, R13, R14, R20; KTD3, KTD4, KTD5, KTD6.
 - **Dependencies:** U1.
 - **Files:** `src/zellij_tab_namer/installer.py`, `tests/test_installer.py`.
-- **Approach:** Use sentinel names for the tab-namer alias and stable filename, insert into existing `plugins {}` and `load_plugins {}` blocks only when those blocks can be located unambiguously, and avoid duplicate entries on repeated runs. Permission updates operate on exact quoted absolute path blocks and a known permission list; if the permission file is malformed or unsupported, return a stopped operation result before partial mutation.
+- **Approach:** Use sentinel names for the tab-namer alias and stable filename, insert into existing `plugins {}` and `load_plugins {}` blocks only when those blocks can be located unambiguously, and avoid duplicate entries on repeated runs. Permission updates operate on exact quoted absolute path blocks and a known permission list; on macOS, successful headless pre-grants leave `permissions.kdl` frozen afterward unless explicitly opted out. If the permission file is malformed or unsupported, return a stopped operation result before partial mutation.
 - **Execution note:** Use fixture strings for KDL-like files and assert unrelated comments/keybind snippets survive byte-for-byte where untouched.
 - **Patterns to follow:** `config.kdl` plugin alias and `load_plugins` shapes; `docs/solutions/integration-issues/zjstatus-hints-permission-prompt-behind-pane.md` for permission-cache behavior.
 - **Test scenarios:** Given a config with existing plugin aliases, WASM install adds one tab-namer alias and one `load_plugins` entry. Given the same config already wired, a second run is a no-op. Given a config without unambiguous `plugins` or `load_plugins` blocks, the installer stops with a manual action. Covers AE3. Given a permission cache with another plugin grant, the tab-namer grant is added without changing the other grant. Covers AE4 and AE5. Given activation is not requested, no operation invokes session deletion or restart. Covers AE6.
